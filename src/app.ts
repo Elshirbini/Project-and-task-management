@@ -9,6 +9,7 @@ import { httpLoggerMiddleware } from "./middlewares/httpLogger";
 import path from "path";
 import { authRoutes } from "./auth/auth.routes";
 import { projectRoutes } from "./project/project.routes";
+import { taskRoutes } from "./task/task.routes";
 import { sanitizeBody } from "./middlewares/sanitizeBody";
 
 configDotenv();
@@ -57,6 +58,7 @@ app.use(
 
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/project", projectRoutes);
+app.use("/api/v1/task", taskRoutes);
 
 // app.use(express.static(path.join(__dirname, "dist")));
 

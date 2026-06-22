@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "dev": "nodemon",
+    "start:prod": "sequelize-cli db:migrate --env production && node dist/server.js",
     "build": "tsc",
     "copy-locales": "cp -r src/locales dist/",
     "start": "node dist/server.js",

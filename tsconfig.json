@@ -110,6 +110,10 @@
     // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
     "skipLibCheck": true /* Skip type checking all .d.ts files. */
   },
-  "include": ["src"],
+  "include": [
+    "src",
+    "database/migrations/20260622145246-create-users-table.js",
+    "database/migrations/20260622161505-create-projects-table.js"
+  ],
   "exclude": ["node_modules", "dist"]
 }

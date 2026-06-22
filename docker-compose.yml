@@ -1,37 +1,30 @@
 services:
   app:
-    image: elshirbini/apollo-perfume:latest
+    image: elshirbini/project-and-task-management:latest
+    restart: unless-stopped
     env_file:
       - .env
     ports:
       - "8080:8080"
     volumes:
-      - /var/logs/apollo-perfume:/usr/src/app/logs
-    deploy:
-      endpoint_mode: vip
-      restart_policy:
-        condition: on-failure
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-    networks:
-      - apollo-perfume-app-network
+      - logs:/usr/src/app/logs
     depends_on:
-      - redis
+      - postgres
 
-  redis:
-    image: redis:latest
+  postgres:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASSWORD}
+    env_file:
+      - .env
     ports:
-      - "6379:6379"
+      - "5432:5432"
     volumes:
-      - redis_data:/data
-    networks:
-      - apollo-perfume-app-network
-
-networks:
-  apollo-perfume-app-network:
-    driver: overlay
+      - postgres_data:/var/lib/postgresql/data
 
 volumes:
-  redis_data:
+  logs:
+  postgres_data:

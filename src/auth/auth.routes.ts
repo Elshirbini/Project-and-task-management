@@ -4,7 +4,6 @@ import {
   login,
   refreshAccessToken,
   signup,
-  verifyEmail,
 } from "../auth/auth.controller";
 import {
   loginValidator,
@@ -31,13 +30,15 @@ router.post(
   validateInputs,
   signup,
 );
-router.post(
-  "/verify-email",
-  verifyEmailLimiter,
-  otpValidator,
-  validateInputs,
-  verifyEmail,
-);
+
+// for email verification flow, that's for future use
+// router.post(
+//   "/verify-email",
+//   verifyEmailLimiter,
+//   otpValidator,
+//   validateInputs,
+//   verifyEmail,
+// );
 
 router.post("/refresh-token", refreshAccessToken);
 

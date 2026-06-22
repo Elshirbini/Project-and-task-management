@@ -1,6 +1,4 @@
 import { ApiError } from "../utils/apiError";
-import { redisClient } from "../config/redis";
-import { generateOTP } from "../utils/generateOTP";
 import { hash, compare } from "bcrypt";
 import jwt from "jsonwebtoken";
 import {
@@ -14,7 +12,6 @@ import {
   findUserByEmail,
   findUserById,
 } from "../user/user.repository";
-import { emailService } from "../email/email.service";
 
 export const getProfile = async (req: Request, res: Response) => {
   const userId = req.userId as string;
@@ -57,45 +54,42 @@ export const signup = async (req: Request, res: Response) => {
   const isExist = await findUserByEmail(email);
   if (isExist) throw new ApiError("This email is already exist", 403);
 
-  const otp = generateOTP();
-
-  const userData = { name, email, password };
-
-  redisClient.setEx(`${otp}`, 300, JSON.stringify(userData));
-
-  await emailService.sendOTPConfirmationEmail(email, otp);
-
-  return success(res, 200, "OTP sent", null);
-};
-
-export const verifyEmail = async (req: Request, res: Response) => {
-  const { otp } = req.body;
-
-  const userData = await redisClient.get(`${otp}`);
-  if (!userData) {
-    throw new ApiError("Invalid or expired verification code", 403);
-  }
-
-  const parsedData = JSON.parse(userData);
-
-  const { email, name, password } = parsedData;
-
   const hashedPassword = await hash(password, 12);
 
-  const createData = {
-    name,
-    email,
-    password: hashedPassword,
-  };
+  await createUser({ name, email, password: hashedPassword });
 
-  await createUser(createData);
-
-  await redisClient.del(`${otp}`);
-
-  await emailService.sendWelcomeEmail(email);
-
-  return success(res, 201, "Account created successfully");
+  return success(res, 200, "Account created successfully", null);
 };
+
+// for email verification flow, that's for future use
+// export const verifyEmail = async (req: Request, res: Response) => {
+//   const { otp } = req.body;
+
+//   const userData = await redisClient.get(`${otp}`);
+//   if (!userData) {
+//     throw new ApiError("Invalid or expired verification code", 403);
+//   }
+
+//   const parsedData = JSON.parse(userData);
+
+//   const { email, name, password } = parsedData;
+
+//   const hashedPassword = await hash(password, 12);
+
+//   const createData = {
+//     name,
+//     email,
+//     password: hashedPassword,
+//   };
+
+//   await createUser(createData);
+
+//   await redisClient.del(`${otp}`);
+
+//   await emailService.sendWelcomeEmail(email);
+
+//   return success(res, 201, "Account created successfully");
+// };
 
 export const refreshAccessToken = async (
   req: Request,
