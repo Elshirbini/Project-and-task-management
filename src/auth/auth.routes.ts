@@ -21,7 +21,7 @@ import { verifyToken } from "../middlewares/verifyToken";
 
 const router = express.Router();
 
-router.get("/get-profile", verifyToken, getProfile);
+router.get("/profile", verifyToken, getProfile);
 
 router.post("/login", loginLimiter, loginValidator, validateInputs, login);
 router.post(

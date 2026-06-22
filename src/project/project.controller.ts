@@ -44,16 +44,11 @@ export const getProjects = async (req: Request, res: Response) => {
 export const getProject = async (req: Request, res: Response) => {
   const id = req.params.id as string;
   const user_id = req.userId as string;
-  const userRole = req.userRole as string;
 
   const project = await findProjectById(id);
 
-  if (!project) {
+  if (!project || project.user_id !== user_id) {
     throw new ApiError("Project not found", 404);
-  }
-
-  if (project.user_id !== user_id && userRole !== "admin") {
-    throw new ApiError("Unauthorized to view this project", 403);
   }
 
   return success(res, 200, "Project retrieved successfully", project);
@@ -62,17 +57,12 @@ export const getProject = async (req: Request, res: Response) => {
 export const modifyProject = async (req: Request, res: Response) => {
   const id = req.params.id as string;
   const user_id = req.userId as string;
-  const userRole = req.userRole as string;
   const { title, description, status } = req.body;
 
   const project = await findProjectById(id);
 
-  if (!project) {
+  if (!project || project.user_id !== user_id) {
     throw new ApiError("Project not found", 404);
-  }
-
-  if (project.user_id !== user_id && userRole !== "admin") {
-    throw new ApiError("Unauthorized to update this project", 403);
   }
 
   const updatedProject = await updateProject(project, {
@@ -87,16 +77,11 @@ export const modifyProject = async (req: Request, res: Response) => {
 export const removeProject = async (req: Request, res: Response) => {
   const id = req.params.id as string;
   const user_id = req.userId as string;
-  const userRole = req.userRole as string;
 
   const project = await findProjectById(id);
 
-  if (!project) {
+  if (!project || project.user_id !== user_id) {
     throw new ApiError("Project not found", 404);
-  }
-
-  if (project.user_id !== user_id && userRole !== "admin") {
-    throw new ApiError("Unauthorized to delete this project", 403);
   }
 
   await deleteProject(project);

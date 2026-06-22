@@ -56,7 +56,7 @@ app.use(
 //                                 **ROUTES**
 
 app.use("/api/v1/auth", authRoutes);
-app.use("/api/v1/projects", projectRoutes);
+app.use("/api/v1/project", projectRoutes);
 
 // app.use(express.static(path.join(__dirname, "dist")));
 
