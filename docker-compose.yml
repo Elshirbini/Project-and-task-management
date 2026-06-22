@@ -1,0 +1,37 @@
+services:
+  app:
+    image: elshirbini/apollo-perfume:latest
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    volumes:
+      - /var/logs/apollo-perfume:/usr/src/app/logs
+    deploy:
+      endpoint_mode: vip
+      restart_policy:
+        condition: on-failure
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+    networks:
+      - apollo-perfume-app-network
+    depends_on:
+      - redis
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    networks:
+      - apollo-perfume-app-network
+
+networks:
+  apollo-perfume-app-network:
+    driver: overlay
+
+volumes:
+  redis_data:
