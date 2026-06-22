@@ -11,7 +11,7 @@ router.patch(
   verifyToken,
   updateUserValidation,
   validateInputs,
-  updateUser
+  updateUser,
 );
 
 export const userRoutes = router;

@@ -2,19 +2,14 @@ import { fileTypeFromBuffer as fromBuffer } from "file-type";
 import { ApiError } from "../utils/apiError";
 import { NextFunction, Request, Response } from "express";
 
-const allowedMime = [
-  "image/jpeg",
-  "image/png",
-  "image/webp",
-  "image/gif",
-];
+const allowedMime = ["image/jpeg", "image/png", "image/webp", "image/gif"];
 
 const allowedExt = ["jpg", "jpeg", "png", "webp", "gif"];
 
 export const validateFiles = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   try {
     // نجمع الملفات من كل الحالات

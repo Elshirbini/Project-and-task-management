@@ -12,7 +12,7 @@ export const generateRefreshToken = async (_id: string) => {
       (err, token) => {
         if (err) return reject(new ApiError("Error in signing token", 501));
         resolve(token);
-      }
+      },
     );
   });
   return token;
@@ -29,7 +29,7 @@ export const generateAccessToken = async (_id: string, role: string) => {
       (err, token) => {
         if (err) return reject(new ApiError("Error in signing token", 501));
         resolve(token);
-      }
+      },
     );
   });
   return token;

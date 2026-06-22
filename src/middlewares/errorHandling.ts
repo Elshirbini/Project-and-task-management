@@ -6,7 +6,7 @@ export const errorHandling = (
   err: ApiError,
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   logger.error(err);
   err.statusCode = err.statusCode || 500;

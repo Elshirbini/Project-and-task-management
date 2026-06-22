@@ -35,7 +35,10 @@ export const login = async (req: Request, res: Response) => {
   const isPassEq = await compare(password, user.password!);
   if (!isPassEq) throw new ApiError("Password Wrong", 401);
 
-  const accessToken = await generateAccessToken(user.user_id.toString(), user.role);
+  const accessToken = await generateAccessToken(
+    user.user_id.toString(),
+    user.role,
+  );
   const refreshToken = await generateRefreshToken(user.user_id.toString());
 
   return success(res, 200, "Login successfully", {
@@ -88,6 +91,8 @@ export const verifyEmail = async (req: Request, res: Response) => {
   await createUser(createData);
 
   await redisClient.del(`${otp}`);
+
+  await emailService.sendWelcomeEmail(email);
 
   return success(res, 201, "Account created successfully");
 };

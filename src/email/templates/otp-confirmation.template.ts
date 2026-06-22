@@ -3,7 +3,7 @@ import { EmailTemplate } from "./email-template.interface";
 export class OtpConfirmationTemplate implements EmailTemplate {
   constructor(
     private readonly recipient: string,
-    private readonly otp: string
+    private readonly otp: string,
   ) {}
 
   get to() {

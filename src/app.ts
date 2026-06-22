@@ -8,6 +8,7 @@ import { errorHandling } from "./middlewares/errorHandling";
 import { httpLoggerMiddleware } from "./middlewares/httpLogger";
 import path from "path";
 import { authRoutes } from "./auth/auth.routes";
+import { projectRoutes } from "./project/project.routes";
 import { sanitizeBody } from "./middlewares/sanitizeBody";
 
 configDotenv();
@@ -16,19 +17,16 @@ const app = express();
 
 //                        **Middlewares**
 
-app.set("trust proxy", true);
+// app.set("trust proxy", true);
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(httpLoggerMiddleware);
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:8080",
-    ],
+    origin: ["http://localhost:5173", "http://localhost:8080"],
     methods: ["GET", "POST", "PUT", "PATCH", "DELETE"],
     credentials: true,
-  })
+  }),
 );
 app.use(cookieParser());
 app.use(sanitizeBody);
@@ -52,12 +50,13 @@ app.use(
     permittedCrossDomainPolicies: { permittedPolicies: "none" },
     referrerPolicy: { policy: "strict-origin-when-cross-origin" },
     xssFilter: true,
-  })
+  }),
 );
 
 //                                 **ROUTES**
 
 app.use("/api/v1/auth", authRoutes);
+app.use("/api/v1/projects", projectRoutes);
 
 // app.use(express.static(path.join(__dirname, "dist")));
 

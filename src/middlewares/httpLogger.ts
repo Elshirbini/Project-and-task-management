@@ -4,7 +4,7 @@ import { logger } from "../config/logger";
 export const httpLoggerMiddleware = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   const start = Date.now();
 

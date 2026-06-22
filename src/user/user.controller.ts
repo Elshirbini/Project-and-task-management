@@ -12,7 +12,7 @@ export const updateUser = async (req: Request, res: Response) => {
     phone,
   });
 
-  if (!user) throw new ApiError(req.__("User not found"), 404);
+  if (!user) throw new ApiError("User not found", 404);
 
   return success(res, 200, null, user);
 };

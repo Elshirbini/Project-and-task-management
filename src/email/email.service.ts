@@ -1,7 +1,6 @@
 import { Resend } from "resend";
 import { EmailTemplate } from "./templates/email-template.interface";
 import { OtpConfirmationTemplate } from "./templates/otp-confirmation.template";
-import { ResetPasswordTemplate } from "./templates/reset-password.template";
 import { WelcomeTemplate } from "./templates/welcome.template";
 import { logger } from "../config/logger";
 
@@ -15,7 +14,7 @@ export class EmailService {
   private async sendEmail(to: string, subject: string, htmlContent: string) {
     try {
       const data = await this.resend.emails.send({
-        from: "Apollo Perfumes<info@apolloperfumes.com>",
+        from: "Ahmed Elshirbini<info@mail.ahmedelshirbini.site>",
         to: [to],
         subject,
         html: htmlContent,
@@ -33,11 +32,6 @@ export class EmailService {
 
   async sendOTPConfirmationEmail(to: string, otp: string) {
     const template = new OtpConfirmationTemplate(to, otp);
-    await this.sendTemplate(template);
-  }
-
-  async sendResetPasswordEmail(to: string, code: string) {
-    const template = new ResetPasswordTemplate(to, code);
     await this.sendTemplate(template);
   }
 

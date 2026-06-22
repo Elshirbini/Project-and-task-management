@@ -4,7 +4,7 @@ import sanitizeHtml from "sanitize-html";
 export const sanitizeBody = (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   if (req.body) {
     for (let key in req.body) {

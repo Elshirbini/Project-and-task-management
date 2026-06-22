@@ -29,19 +29,19 @@ const baseFormat = combine(
   timestamp({ format: "YYYY-MM-DD HH:mm:ss" }),
   errors({ stack: true }),
   splat(),
-  logFormat
+  logFormat,
 );
 
 const consoleFormat = combine(colorize({ all: true }), baseFormat);
 
 const dailyRotate = new (winston.transports as any).DailyRotateFile({
-  dirname: "logs",              // same folder
-  filename: "app-%DATE%.log",   // one file per day
+  dirname: "logs", // same folder
+  filename: "app-%DATE%.log", // one file per day
   datePattern: "YYYY-MM-DD",
   zippedArchive: true,
   maxSize: "20m",
-  maxFiles: "14d",              // keep 14 days of logs
-  level: "debug",               // include EVERYTHING
+  maxFiles: "14d", // keep 14 days of logs
+  level: "debug", // include EVERYTHING
 });
 
 export const logger = winston.createLogger({

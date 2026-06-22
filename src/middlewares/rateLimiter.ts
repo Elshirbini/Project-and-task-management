@@ -29,7 +29,7 @@ export const verifyEmailLimiter = rateLimit({
 
 export const generalApiLimiter = rateLimit({
   windowMs: 1 * 60 * 1000,
-  max: 500, 
+  max: 500,
   message: "Too many requests from this IP, please slow down.",
   standardHeaders: true,
   legacyHeaders: false,

@@ -14,12 +14,13 @@ export interface UserAttributes {
   updatedAt?: Date;
 }
 
-export interface UserCreationAttributes
-  extends Optional<UserAttributes, "user_id" | "role"> {}
+export interface UserCreationAttributes extends Optional<
+  UserAttributes,
+  "user_id" | "role"
+> {}
 
 export interface UserInstance
-  extends Model<UserAttributes, UserCreationAttributes>,
-    UserAttributes {}
+  extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {}
 
 export const User = sequelize.define<UserInstance>("users", {
   user_id: {

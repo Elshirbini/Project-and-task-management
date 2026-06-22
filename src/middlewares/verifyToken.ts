@@ -9,7 +9,7 @@ configDotenv();
 export const verifyToken = async (
   req: Request,
   res: Response,
-  next: NextFunction
+  next: NextFunction,
 ) => {
   let token;
   if (req.cookies["accessToken"]) {
@@ -23,12 +23,12 @@ export const verifyToken = async (
     role: string;
   };
 
-  if (!user) return next(new ApiError(req.__("Token is not valid"), 401));
+  if (!user) return next(new ApiError("Token is not valid", 401));
 
   req.userId = user.id;
   req.userRole = user.role;
 
   const userDoc = await User.findByPk(user.id);
-  if (!userDoc) return next(new ApiError(req.__("User not found"), 404));
+  if (!userDoc) return next(new ApiError("User not found", 404));
   next();
 };

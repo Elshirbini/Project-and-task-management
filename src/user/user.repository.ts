@@ -1,9 +1,13 @@
 import { Op } from "sequelize";
-import { User, UserAttributes, UserCreationAttributes } from "./entities/user.entity";
+import {
+  User,
+  UserAttributes,
+  UserCreationAttributes,
+} from "./entities/user.entity";
 
 export const findUserByIdAndUpdate = async (
   id: string,
-  userData: Partial<UserAttributes>
+  userData: Partial<UserAttributes>,
 ) => {
   const user = await User.findByPk(id);
   if (!user) return null;
@@ -47,7 +51,7 @@ export const saveUser = async (user: any) => {
 
 export const findUserByEmailAndUpdate = async (
   email: string,
-  userData: Partial<UserAttributes>
+  userData: Partial<UserAttributes>,
 ) => {
   const user = await User.findOne({ where: { email } });
   if (!user) return null;

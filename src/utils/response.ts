@@ -4,7 +4,7 @@ export const success = (
   res: Response,
   statusCode: number,
   message: string | null = "",
-  data: object | null = {}
+  data: object | null = {},
 ) => {
   return res
     .status(statusCode)
