@@ -6,10 +6,7 @@ export interface UserAttributes {
   name: string;
   email: string;
   password?: string;
-  phone?: string;
   role: "admin" | "member";
-  codeValidation?: string | null;
-  codeValidationExpire?: Date | null;
   createdAt?: Date;
   updatedAt?: Date;
 }

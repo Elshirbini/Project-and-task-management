@@ -14,9 +14,13 @@ const sequelize = new Sequelize(
     logging: false,
   },
 );
-(async () => {
-  await sequelize.authenticate();
-  logger.info("Connected to PostgreSQL successfully.");
-})();
+export const connectDB = async () => {
+  try {
+    await sequelize.authenticate();
+    logger.info("Connected to PostgreSQL successfully.");
+  } catch (error) {
+    logger.error("Unable to connect to the database:", error);
+  }
+};
 
 export default sequelize;

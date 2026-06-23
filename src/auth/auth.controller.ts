@@ -96,13 +96,17 @@ export const refreshAccessToken = async (
   res: Response,
   next: NextFunction,
 ) => {
-  const refreshToken = req.cookies["refreshToken"];
-  if (!refreshToken) return next(new ApiError("Invalid refresh token", 401));
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith("Bearer ")
+  ) {
+    token = req.headers.authorization.split(" ")[1];
+  }
 
-  const payload = jwt.verify(
-    refreshToken,
-    process.env.REFRESH_TOKEN_SECRET!,
-  ) as {
+  if (!token) return next(new ApiError("Unauthorized", 401));
+
+  const payload = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET!) as {
     id: string;
   };
 

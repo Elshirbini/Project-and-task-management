@@ -22,16 +22,6 @@ export const findUserByEmail = async (email: string) => {
   return User.findOne({ where: { email } });
 };
 
-export const findValidUser = async (id: string, code: string) => {
-  return User.findOne({
-    where: {
-      user_id: id,
-      codeValidation: code,
-      codeValidationExpire: { [Op.gt]: new Date() },
-    },
-  });
-};
-
 export const getUsers = async (id: string) => {
   return User.findAll({
     where: {
