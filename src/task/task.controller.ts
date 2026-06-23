@@ -55,13 +55,10 @@ export const getTasks = async (req: Request, res: Response) => {
 
   const tasks = await findTasks(project_id, user_id, limit, offset, filters);
 
-  return success(res, 200, "Tasks retrieved successfully", {
-    data: tasks.rows,
-    meta: {
-      page,
-      totalCount: tasks.count,
-      totalPages: Math.ceil(tasks.count / limit),
-    },
+  return success(res, 200, "Tasks retrieved successfully", [...tasks.rows], {
+    page,
+    totalCount: tasks.count,
+    totalPages: Math.ceil(tasks.count / limit),
   });
 };
 

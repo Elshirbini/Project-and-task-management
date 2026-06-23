@@ -4,9 +4,12 @@ export const success = (
   res: Response,
   statusCode: number,
   message: string | null = "",
-  data: object | null = {},
+  data: any | null = {},
+  meta?: any,
 ) => {
-  return res
-    .status(statusCode)
-    .json({ success: true, message: message, data: data });
+  const payload: any = { success: true, message: message, data: data };
+  if (meta) {
+    payload.meta = meta;
+  }
+  return res.status(statusCode).json(payload);
 };

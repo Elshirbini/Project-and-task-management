@@ -15,7 +15,7 @@ export const findUserByIdAndUpdate = async (
 };
 
 export const findUserById = async (id: string) => {
-  return User.findByPk(id);
+  return User.findByPk(id, { attributes: { exclude: ["password"] } });
 };
 
 export const findUserByEmail = async (email: string) => {

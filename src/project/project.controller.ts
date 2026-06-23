@@ -31,14 +31,17 @@ export const getProjects = async (req: Request, res: Response) => {
 
   const projects = await findProjectsByUserId(user_id, limit, offset);
 
-  return success(res, 200, "Projects retrieved successfully", {
-    data: projects.rows,
-    meta: {
+  return success(
+    res,
+    200,
+    "Projects retrieved successfully",
+    [...projects.rows],
+    {
       page,
       totalCount: projects.count,
       totalPages: Math.ceil(projects.count / limit),
     },
-  });
+  );
 };
 
 export const getProject = async (req: Request, res: Response) => {

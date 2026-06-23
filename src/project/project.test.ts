@@ -75,8 +75,8 @@ describe("Project API Endpoints", () => {
       expect(res.status).toBe(200);
       // Controller wraps: success(res, 200, msg, { data: rows, meta: {...} })
       // So res.body = { success, message, data: { data: [...], meta: {...} } }
-      expect(res.body.data.data).toBeInstanceOf(Array);
-      expect(res.body.data.meta.totalCount).toBe(1);
+      expect(res.body.data).toBeInstanceOf(Array);
+      expect(res.body.meta.totalCount).toBe(1);
     });
   });
 
